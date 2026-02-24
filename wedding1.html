@@ -6,29 +6,38 @@
     <title>Elie & Elena Wedding</title>
     <style>
         body {
-            margin: 0;
+           margin: 0;
             padding: 0;
+            background-color: #f8f8f8f8; 
             font-family: 'Georgia', serif;
             text-align: center;
-            background-color: #f8f8f8;
             color: #333;
         }
-        .section {
-            padding: 50px 20px;
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            border-bottom: 1px solid #eee;
+      .section {
+    padding: 60px 30px;
+    max-width: 650px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+}
+            
         }
         .hero {
             background-color: #fff;
             padding: 100px 20px;
         }
-        h1, h2, h3 {
+         h2, h3 {
             font-weight: normal;
             letter-spacing: 2px;
         }
-        h1 { font-size: 2.5em; margin: 10px 0; }
+        h1 { 
+    font-size: 2.5 em;
+    color: #b59a5a;
+    letter-spacing: 2px;
+    text-shadow: 0 5px 15px rgba(181, 154, 90, 0.3);
+ }
         .names { font-size: 3em; color: #b59a5a; }
         .date { font-size: 1.2em; margin-bottom: 30px; }
         .details-box {
@@ -36,6 +45,9 @@
             padding: 20px;
             margin: 20px 0;
         }
+h2{
+font-family: Century;
+}
         .btn {
             background: #b59a5a;
             color: white;
@@ -54,6 +66,7 @@
         }
 
 .image-container {
+            
             position: relative;
             width: 100%;
             height: 500px;
@@ -70,6 +83,7 @@
                 black 8%, 
                 black 92%, 
                 transparent 100%);
+                
         }
 
         .image-container img {
@@ -77,12 +91,48 @@
             height: 100%;
             object-fit: cover;
         }
+.back-btn {
+    background: transparent;
+    color: #b59a5a;
+    padding: 12px 35px;
+    border: 1px solid #b59a5a;
+    border-radius: 30px;
+    text-decoration: none;
+    letter-spacing: 2px;
+    transition: all 0.4s ease;
+}
+
+.back-btn:hover {
+    background: #b59a5a;
+    color: white;
+    box-shadow: 0 5px 20px rgba(181, 154, 90, 0.4);
+}
+
+
+
+.section {
+    animation: fadeUp 1.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
     </style>
 </head>
 <body>
 
     <div class="section hero">
-        <p>With joyous hearts, Bechara AL KASSIS & his family & Georges HANNA & his family  request the honor of your presence at the wedding of their son and daughter</p>
+        <p>With joyous hearts, Bechara AL KASSIS & his family      and     Georges HANNA & his family  request the honor of your presence at the wedding of their son and daughter</p>
         <h1 class="names">ELIE & ELENA</h1>
         <p class="date">Saturday, August 08, 2026</p>
     </div>
@@ -131,5 +181,28 @@
 <div class="image-container">
             <img src="4N3A0734.JPG">
         </div>
+
+<audio id="bg-music" loop>
+    <source src="PERFECT - Ed Sheeran - Violin Cover by Andre Soueid.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    window.addEventListener('load', function() {
+        const audio = document.getElementById('bg-music');
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Check if the URL contains '?play=true'
+        if (urlParams.get('play') === 'true') {
+            audio.play().catch(error => {
+                console.log("Playback was prevented. Waiting for a click on this page.");
+                
+                // Fallback: If the browser still blocks it, play on the very first click on the new page
+                document.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
+        }
+    });
+</script>
 </body>
 </html>

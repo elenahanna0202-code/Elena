@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELIE & ELENA Wedding</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
     <style>
 body, html {
     margin: 0;
@@ -16,8 +17,9 @@ body, html {
 .landing-page {
     height: 100vh;
     width: 100%;
-    background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
-                url('4N3A0727.JPG');
+    background: 
+        linear-gradient(rgba(0,0,0,0.10), rgba(0,0,0,0.10)),
+        url('4N3A0727.JPG');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -27,7 +29,7 @@ body, html {
     justify-content: space-between;
     color: white;
     text-align: center;
-    padding: 40px 20px;
+    padding: 60px 20px;
 }
 
 /* Logo */
@@ -35,6 +37,7 @@ body, html {
     font-size: 10vw; /* makes it responsive */
     letter-spacing: -5px;
     font-weight: 300;
+text-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 /* Names */
@@ -42,6 +45,7 @@ body, html {
     font-size: 4vw;
     text-transform: uppercase;
     letter-spacing: 4px;
+
 }
 
 /* Date */
@@ -52,21 +56,25 @@ body, html {
 
 /* Button */
 .start-btn {
-    border: 1px solid white;
-    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255,255,255,0.6);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
     color: white;
-    padding: 12px 40px;
+    padding: 15px 50px;
     text-transform: uppercase;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
+    font-size: 25px;
+    border-radius: 20px;
+    transition: all 0.4s ease;
     cursor: pointer;
-    margin-bottom: 60px;
+    margin-bottom: 70px;
 }
 
 .start-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: white;
+    color: black;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 /* Mobile Fix */
@@ -83,6 +91,25 @@ body, html {
         font-size: 14px;
     }
 }
+
+
+
+
+.header {
+    animation: fadeUp 1.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </style>
 </head>
 <body>
@@ -94,8 +121,9 @@ body, html {
             <div class="date">08 . 08 . 2026</div>
         </div>
 
-       <a href="wedding1.html" class="start-btn">Tap to Start</a>
+       <a href="wedding1.html?play=true" class="start-btn">Tap to Start</a>
     </div>
+
 
 </body>
 </html>
