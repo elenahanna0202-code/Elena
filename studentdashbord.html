@@ -1,0 +1,454 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#f3f5fa;
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:110px;
+    height:100vh;
+    background:#0d3475;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    position:fixed;
+    left:0;
+    top:0;
+    padding-top:25px;
+}
+
+.logo{
+    color:white;
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:40px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+}
+
+.icon{
+    width:70px;
+    height:70px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.icon.active{
+    background:#35579e;
+}
+
+.icon:hover{
+    background:#35579e;
+    transform:translateY(-5px);
+}
+
+.bottom-icon{
+    margin-top:auto;
+    margin-bottom:25px;
+}
+
+/* MAIN */
+
+.main{
+    margin-left:110px;
+    width:calc(100% - 110px);
+    padding:35px 40px;
+}
+
+/* TOP */
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.top h1{
+    font-size:62px;
+    color:#071d49;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.profile img{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+}
+
+.profile h2{
+    color:#071d49;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+    margin-top:40px;
+}
+
+.card{
+    background:white;
+    border-radius:30px;
+    padding:35px;
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+    box-shadow:0 5px 25px rgba(0,0,0,.05);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card-icon{
+    width:85px;
+    height:85px;
+    border-radius:25px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:35px;
+}
+
+.blue{
+    background:#edf3ff;
+    color:#2874ff;
+}
+
+.green{
+    background:#edf9ed;
+    color:#3cb54a;
+}
+
+.purple{
+    background:#f3ecff;
+    color:#6f3ff5;
+}
+
+.orange{
+    background:#fff2e8;
+    color:#ff8c00;
+}
+
+.card h3{
+    color:#5e6e8a;
+    margin-bottom:10px;
+    font-size:18px;
+}
+
+.card h1{
+    color:#071d49;
+    font-size:54px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#6e7b93;
+}
+
+/* LOWER SECTION */
+
+.lower{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-top:30px;
+}
+
+.panel{
+    background:white;
+    border-radius:30px;
+    padding:25px;
+    box-shadow:0 5px 25px rgba(0,0,0,.05);
+}
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.panel-header h2{
+    color:#071d49;
+    font-size:24px;
+}
+
+.view{
+    color:#2874ff;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.class-item,
+.assignment{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid #edf0f5;
+    transition:.3s;
+}
+
+.class-item:hover,
+.assignment:hover{
+    transform:translateX(8px);
+}
+
+.time{
+    width:70px;
+    height:60px;
+    background:#edf3ff;
+    color:#2874ff;
+    border-radius:15px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+}
+
+.details{
+    flex:1;
+    margin-left:20px;
+}
+
+.details h4{
+    color:#071d49;
+    margin-bottom:5px;
+}
+
+.details p{
+    color:#7d8799;
+}
+
+.status{
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:14px;
+    font-weight:600;
+}
+
+.due{
+    background:#fff1e6;
+    color:#ff7a00;
+}
+
+.overdue{
+    background:#ffe9e9;
+    color:#ff3737;
+}
+
+.done{
+    background:#e8fff0;
+    color:#20a95a;
+}
+
+.button{
+    margin-top:20px;
+    width:100%;
+    border:none;
+    background:#edf3ff;
+    color:#2874ff;
+    font-size:18px;
+    font-weight:600;
+    padding:18px;
+    border-radius:18px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.button:hover{
+    background:#2874ff;
+    color:white;
+}
+
+@media(max-width:1000px){
+
+.cards,
+.lower{
+    grid-template-columns:1fr;
+}
+
+.top h1{
+    font-size:42px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+
+<div class="logo">Portal</div>
+
+<div class="menu">
+
+<div class="icon active">
+🏠
+</div>
+
+<div class="icon">
+<a href="studentcourse.html"/>📚</a>
+</div>
+
+<div class="icon">
+<a href="studentschedule.html"/>🗓️</a>
+</div>
+
+<div class="icon">
+<a href="studentannouncement.html"/>📢</a>
+</div>
+
+<div class="icon">
+💬
+</div>
+
+<div class="icon">
+⚙️
+</div>
+
+<div class="icon">
+<a href="studentsignup.html"/>↪️</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="top">
+<h1>Student Dashboard</h1>
+
+<div class="profile">
+<img src="https://i.pravatar.cc/150?img=12">
+<h2>John Doe</h2>
+</div>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<div class="card-icon blue">📖</div>
+<div>
+<h3>Total Courses</h3>
+<h1>6</h1>
+<p>Courses enrolled</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-icon green">📅</div>
+<div>
+<h3>Today's Classes</h3>
+<h1>3</h1>
+<p>Classes scheduled</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-icon purple">👤</div>
+<div>
+<h3>Attendance</h3>
+<h1>94%</h1>
+<p>Overall attendance</p>
+</div>
+</div>
+
+<div class="card">
+<div class="card-icon orange">📄</div>
+<div>
+<h3>Assignments</h3>
+<h1>8</h1>
+<p>Pending submissions</p>
+</div>
+</div>
+
+</div>
+
+<div class="lower">
+
+<div class="panel">
+
+<div class="panel-header">
+<h2>Upcoming Classes</h2>
+<a href="#" class="view">View all</a>
+</div>
+
+<div class="class-item">
+<div class="time">09:00</div>
+<div class="details">
+<h4>Web Development</h4>
+<p>Room 101 • Building A</p>
+</div>
+</div>
+
+<div class="class-item">
+<div class="time">11:00</div>
+<div class="details">
+<h4>Database Systems</h4>
+<p>Room 203 • Building B</p>
+</div>
+</div>
+
+<div class="class-item">
+<div class="time">02:00</div>
+<div class="details">
+<h4>UI/UX Design</h4>
+<p>Room 305 • Building C</p>
+</div>
+</div>
+
+<button class="button">
+Go To Calendar
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+</body>
+</html>

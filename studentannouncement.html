@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal - Announcements</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f3f8;
+            display: flex;
+            min-height: 100vh;
+            color: #1a202c;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 250px;
+            background-color: #032152;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 2.5rem 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            font-family: 'Merriweather', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1rem;
+            color: #c3d0e8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background-color: #1d4080;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-wrapper {
+            flex: 1;
+            padding: 2.5rem 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+        }
+
+        .dashboard-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1000px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        /* --- HEADER --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-family: 'Merriweather', serif;
+            color: #032152;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            padding: 0.6rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.9rem;
+            width: 220px;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #1a62ff;
+        }
+
+        /* --- ANNOUNCEMENTS LIST --- */
+        .announcements-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .announcement-card {
+            border: 1px solid #edf2f7;
+            border-left: 5px solid #1a62ff; /* Default color accent */
+            border-radius: 12px;
+            padding: 1.5rem;
+            background-color: #ffffff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .announcement-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Category Color Variations */
+        .announcement-card.urgent {
+            border-left-color: #d90f1d;
+        }
+
+        .announcement-card.academic {
+            border-left-color: #1a62ff;
+        }
+
+        .announcement-card.event {
+            border-left-color: #8122e0;
+        }
+
+        .announcement-card.info {
+            border-left-color: #0f9d47;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .badge.urgent { background-color: #ffe5e7; color: #d90f1d; }
+        .badge.academic { background-color: #e6f0ff; color: #1a62ff; }
+        .badge.event { background-color: #f3e8ff; color: #8122e0; }
+        .badge.info { background-color: #e6f8ed; color: #0f9d47; }
+
+        .date {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #032152;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            font-size: 0.92rem;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: #718096;
+            font-weight: 500;
+        }
+
+        .author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #cbd5e0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: #4a5568;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">Portal</div>
+        <nav class="nav-menu">
+            <a href="studentdashbord.html" class="nav-item">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="studentcourse.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span>Courses</span>
+            </a>
+            <a href="studentschedule.html" class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span>Schedule</span>
+            </a>
+            <a href="#" class="nav-item active">
+                <span class="nav-icon">📢</span>
+                <span>Announcements</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span>Messages</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">🚫</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="main-wrapper">
+        <div class="dashboard-card">
+            
+            <!-- HEADER SECTION -->
+            <div class="header">
+                <h1>Announcements</h1>
+                <div class="header-actions">
+                    <input type="text" class="search-input" placeholder="Search announcements...">
+                </div>
+            </div>
+
+            <!-- ANNOUNCEMENTS LIST -->
+            <div class="announcements-list">
+
+                <!-- Announcement Item 1 -->
+                <div class="announcement-card urgent">
+                    <div class="card-top">
+                        <span class="badge urgent">Urgent</span>
+                        <span class="date">June 12, 2025</span>
+                    </div>
+                    <h2 class="card-title">Campus Maintenance Notice & Library Closure</h2>
+                    <p class="card-description">
+                        The central library will be closed this coming Friday for scheduled electrical maintenance. Please plan your study sessions accordingly and make use of the online portal resources.
+                    </p>
+                    <div class="card-footer">
+                        <span class="author-avatar">A</span>
+                        <span>Posted by Administration</span>
+                    </div>
+                </div>
+
+                <!-- Announcement Item 2 -->
+                <div class="announcement-card academic">
+                    <div class="card-top">
+                        <span class="badge academic">Academic</span>
+                        <span class="date">June 10, 2025</span>
+                    </div>
+                    <h2 class="card-title">Calculus II Midterm Exam Schedule Updated</h2>
+                    <p class="card-description">
+                        Please review the updated schedule for Room B204. The exam location remains unchanged, but start time will move up by 15 minutes.
+                    </p>
+                    <div class="card-footer">
+                        <span class="author-avatar">M</span>
+                        <span>Posted by Prof. Miller</span>
+                    </div>
+                </div>
+
+                <!-- Announcement Item 3 -->
+                <div class="announcement-card event">
+                    <div class="card-top">
+                        <span class="badge event">Event</span>
+                        <span class="date">June 8, 2025</span>
+                    </div>
+                    <h2 class="card-title">Annual Computer Science Hackathon Registration Open</h2>
+                    <p class="card-description">
+                        Registrations for this semester’s Hackathon are now live! Form teams of up to 4 members and submit your proposals by June 20th.
+                    </p>
+                    <div class="card-footer">
+                        <span class="author-avatar">CS</span>
+                        <span>Posted by CS Department</span>
+                    </div>
+                </div>
+
+                <!-- Announcement Item 4 -->
+                <div class="announcement-card info">
+                    <div class="card-top">
+                        <span class="badge info">General</span>
+                        <span class="date">June 5, 2025</span>
+                    </div>
+                    <h2 class="card-title">Summer Session Registration Guidelines</h2>
+                    <p class="card-description">
+                        Registration for elective courses for the upcoming term opens next Monday. Make sure to consult with your academic advisor prior to finalizing your course selection.
+                    </p>
+                    <div class="card-footer">
+                        <span class="author-avatar">A</span>
+                        <span>Posted by Academic Office</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

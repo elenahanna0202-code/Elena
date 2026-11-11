@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Schedule</title>
+    <!-- Google Fonts for typography matching the design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f3f8;
+            display: flex;
+            min-height: 100vh;
+            color: #1a202c;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 250px;
+            background-color: #032152;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            padding: 2.5rem 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+            font-family: 'Merriweather', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.85rem 1rem;
+            color: #c3d0e8;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background-color: #1d4080;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-wrapper {
+            flex: 1;
+            padding: 2rem 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+        }
+
+        .dashboard-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1100px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+        }
+
+        /* --- HEADER SECTION --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .header h1 {
+            font-family: 'Merriweather', serif;
+            color: #032152;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .week-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-arrow {
+            background-color: #1a62ff;
+            color: #ffffff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-arrow:hover {
+            background-color: #0046d1;
+            transform: scale(1.05);
+        }
+
+        .week-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #718096;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        /* --- GRID SCHEDULE --- */
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: 120px repeat(5, 1fr);
+            border-collapse: collapse;
+        }
+
+        /* Header Row */
+        .grid-header {
+            background-color: #f7fafc;
+            padding: 1rem 0;
+            text-align: center;
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .grid-header.time-col {
+            background-color: transparent;
+        }
+
+        /* Schedule Body Rows */
+        .time-cell {
+            padding: 1.5rem 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #4a5568;
+            text-align: center;
+            border-top: 1px solid #edf2f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.2rem;
+        }
+
+        .time-cell span {
+            display: block;
+        }
+
+        .slot-cell {
+            border-top: 1px solid #edf2f7;
+            padding: 0.5rem;
+            min-height: 90px;
+            position: relative;
+        }
+
+        /* --- EVENT CARDS & HOVERS --- */
+        .event-card {
+            height: 100%;
+            width: 100%;
+            border-radius: 12px;
+            padding: 0.85rem 0.5rem;
+            color: #ffffff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-title {
+            font-weight: 700;
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+
+        .event-location {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Event Specific Colors */
+        .event-blue {
+            background-color: #1a62ff;
+        }
+
+        .event-green {
+            background-color: #0f9d47;
+        }
+
+        .event-purple {
+            background-color: #8122e0;
+        }
+
+        .event-orange {
+            background-color: #f26500;
+        }
+
+        .event-red {
+            background-color: #d90f1d;
+        }
+
+        /* Responsive Layout Adjustments */
+        @media (max-width: 992px) {
+            body {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                padding: 1.5rem;
+            }
+            .schedule-grid {
+                overflow-x: auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">Portal</div>
+        <nav class="nav-menu">
+            <a href="studentdashbord.html">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </a>
+            <a href="studentcourse.html" class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span>Courses</span>
+            </a>
+            <a href="#" class="nav-item"  class="nav-item active">
+                <span class="nav-icon">📅</span>
+                <span>Schedule</span>
+            </a>
+            <a href="studentannouncement.html" class="nav-item">
+                <span class="nav-icon">📢</span>
+                <span>Announcements</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span>Messages</span>
+            </a>
+            <a href="#" class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </a>
+            <a href="studentsignup.html" class="nav-item">
+                <span class="nav-icon">🚫</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="main-wrapper">
+        <div class="dashboard-card">
+            
+            <!-- HEADER SECTION -->
+            <div class="header">
+                <h1>Schedule</h1>
+                <div class="week-controls">
+                    <button class="btn-arrow" aria-label="Previous week">&lt;</button>
+                    <span class="week-label">Week 1</span>
+                    <button class="btn-arrow" aria-label="Next week">&gt;</button>
+                </div>
+            </div>
+
+            <!-- DATE SUBTITLE -->
+            <div class="date-range">
+                <span>📅</span>
+                <span>June 9 – June 13, 2025</span>
+            </div>
+
+            <!-- SCHEDULE GRID -->
+            <div class="schedule-grid">
+                <!-- Column Headers -->
+                <div class="grid-header time-col"></div>
+                <div class="grid-header">Monday</div>
+                <div class="grid-header">Tuesday</div>
+                <div class="grid-header">Wednesday</div>
+                <div class="grid-header">Thursday</div>
+                <div class="grid-header">Friday</div>
+
+                <!-- Row 1: 8:00 AM - 10:00 AM -->
+                <div class="time-cell">
+                    <span>8:00 AM</span>
+                    <span>10:00 AM</span>
+                </div>
+                <div class="slot-cell">
+                    <div class="event-card event-blue">
+                        <div class="event-title">Computer Science</div>
+                        <div class="event-location">Room A101</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell">
+                    <div class="event-card event-blue">
+                        <div class="event-title">Computer Science</div>
+                        <div class="event-location">Room A101</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell">
+                    <div class="event-card event-blue">
+                        <div class="event-title">Computer Science</div>
+                        <div class="event-location">Room A101</div>
+                    </div>
+                </div>
+
+                <!-- Row 2: 10:30 AM - 12:30 PM -->
+                <div class="time-cell">
+                    <span>10:30 AM</span>
+                    <span>12:30 PM</span>
+                </div>
+                <div class="slot-cell">
+                    <div class="event-card event-green">
+                        <div class="event-title">Calculus II</div>
+                        <div class="event-location">Room B204</div>
+                    </div>
+                </div>
+                <div class="slot-cell">
+                    <div class="event-card event-purple">
+                        <div class="event-title">Physics</div>
+                        <div class="event-location">Lab 3</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell">
+                    <div class="event-card event-green">
+                        <div class="event-title">Calculus II</div>
+                        <div class="event-location">Room B204</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+
+                <!-- Row 3: 1:00 PM - 3:00 PM -->
+                <div class="time-cell">
+                    <span>1:00 PM</span>
+                    <span>3:00 PM</span>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell">
+                    <div class="event-card event-orange">
+                        <div class="event-title">English Literature</div>
+                        <div class="event-location">Room C110</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell">
+                    <div class="event-card event-orange">
+                        <div class="event-title">English Literature</div>
+                        <div class="event-location">Room C110</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+
+                <!-- Row 4: 3:30 PM - 5:30 PM -->
+                <div class="time-cell">
+                    <span>3:30 PM</span>
+                    <span>5:30 PM</span>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell">
+                    <div class="event-card event-red">
+                        <div class="event-title">Study Session</div>
+                        <div class="event-location">Library</div>
+                    </div>
+                </div>
+                <div class="slot-cell"></div>
+
+                <!-- Row 5: 6:00 PM - 7:30 PM -->
+                <div class="time-cell">
+                    <span>6:00 PM</span>
+                    <span>7:30 PM</span>
+                </div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell"></div>
+                <div class="slot-cell"></div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
+
+

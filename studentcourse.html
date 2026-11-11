@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', sans-serif;
+    }
+
+    body{
+      background:#f4f7fb;
+      display:flex;
+      min-height:100vh;
+      color:#1e293b;
+    }
+
+    .sidebar{
+      width:260px;
+      background:linear-gradient(180deg,#0f2b5b,#133d7a);
+      color:white;
+      padding:30px 0;
+      position:fixed;
+      height:100%;
+      box-shadow:4px 0 20px rgba(0,0,0,0.08);
+    }
+
+    .logo{
+      font-size:30px;
+      font-weight:700;
+      padding:0 35px 30px;
+    }
+
+    .menu{
+      list-style:none;
+    }
+
+    .menu li{
+      margin:8px 15px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      color:white;
+      display:flex;
+      align-items:center;
+      gap:15px;
+      padding:16px 18px;
+      border-radius:14px;
+      transition:0.3s;
+      font-size:16px;
+    }
+
+    .menu a:hover,
+    .menu .active{
+      background:rgba(255,255,255,0.14);
+      backdrop-filter:blur(5px);
+    }
+
+    .main{
+      margin-left:260px;
+      width:calc(100% - 260px);
+      padding:35px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:35px;
+    }
+
+    .topbar h1{
+      font-size:34px;
+      font-weight:700;
+      color:#0f172a;
+    }
+
+    .profile{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .profile img{
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      object-fit:cover;
+    }
+
+    .profile span{
+      font-weight:600;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:22px;
+      margin-bottom:35px;
+    }
+
+    .card{
+      background:white;
+      padding:25px;
+      border-radius:22px;
+      box-shadow:0 8px 25px rgba(15,23,42,0.05);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-4px);
+    }
+
+    .card h3{
+      font-size:16px;
+      color:#64748b;
+      margin-bottom:10px;
+    }
+
+    .card p{
+      font-size:30px;
+      font-weight:700;
+      color:#0f172a;
+    }
+
+    .table-section{
+      background:white;
+      border-radius:24px;
+      padding:25px;
+      box-shadow:0 8px 25px rgba(15,23,42,0.05);
+    }
+
+    .table-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:20px;
+    }
+
+    .table-title h2{
+      font-size:26px;
+      color:#0f172a;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+    }
+
+    thead{
+      background:#f8fafc;
+    }
+
+    th{
+      text-align:left;
+      padding:18px;
+      color:#64748b;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    td{
+      padding:22px 18px;
+      border-bottom:1px solid #e2e8f0;
+      font-size:15px;
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    .course{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
+
+    .course-icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      font-weight:700;
+      font-size:18px;
+    }
+
+    .blue{ background:#2563eb; }
+    .green{ background:#16a34a; }
+    .purple{ background:#9333ea; }
+    .orange{ background:#ea580c; }
+
+    .teacher{
+      font-weight:500;
+    }
+
+    .schedule{
+      color:#475569;
+    }
+
+    .room{
+      font-weight:600;
+      color:#0f172a;
+    }
+
+    @media(max-width:950px){
+
+      .sidebar{
+        width:90px;
+      }
+
+      .logo{
+        font-size:18px;
+        padding-left:20px;
+      }
+
+      .menu a span{
+        display:none;
+      }
+
+      .main{
+        margin-left:90px;
+        width:calc(100% - 90px);
+      }
+
+      table{
+        display:block;
+        overflow-x:auto;
+      }
+    }
+
+.menu a:hover{
+  transform:translateX(8px);
+  background:rgba(255,255,255,0.18);
+  box-shadow:0 10px 25px rgba(0,0,0,0.18);
+}
+.card:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 18px 40px rgba(15,23,42,0.12);
+}
+
+tbody tr:hover{
+  background:#f8fbff;
+  transform:scale(1.005);
+}
+
+tbody tr:hover .course-icon{
+  transform:rotate(8deg) scale(1.12);
+  box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
+
+.profile:hover{
+  background:white;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  transform:translateY(-2px);
+}
+
+.profile:hover img{
+  transform:scale(1.08);
+}
+
+
+.table-section:hover{
+  box-shadow:0 15px 35px rgba(15,23,42,0.08);
+}
+
+button:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 25px rgba(37,99,235,0.25);
+}
+
+.see {
+padding: 20px;
+border-radius: 30px;
+background-color: blue;
+color: white;
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+
+    <div class="logo">Portal</div>
+
+    <ul class="menu">
+      <li><a href="studentdashbord.html">🏠 <span>Dashboard</span></a></li>
+      <li><a href="#" class="active">📚 <span>Courses</span></a></li>
+      <li><a href="studentschedule.html">📅 <span>Schedule</span></a></li>
+      <li><a href="studentannouncement.html">📢 <span>Announcements</span></a></li>
+      <li><a href="#">💬 <span>Messages</span></a></li>
+      <li><a href="#">⚙️ <span>Settings</span></a></li>
+      <li><a href="studentsignup.html">⎋<span>Logout</span></a></li>
+    </ul>
+
+  </div>
+
+  <div class="main">
+
+    <div class="topbar">
+      <div class="profile">
+        <img src="https://img.freepik.com/premium-photo/young-portrait-young-male-teacher-light-background_975403-8442.jpg">
+        <span>John Doe</span>
+      </div>
+    </div>
+
+    <div class="table-section">
+
+      <div class="table-title">
+        <h2>My Courses</h2>
+      </div>
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Teacher</th>
+            <th>See Course</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>
+              <div class="course">
+                <div class="course-icon blue">CS</div>
+
+                <div>
+                  <strong>Computer Science</strong><br>
+                  CS101
+                </div>
+              </div>
+            </td>
+
+            <td class="teacher">Dr. Michael Brown</td>
+
+            <td><button class="see">Enter<button></td>
+
+          </tr>
+
+          <tr>
+            <td>
+              <div class="course">
+                <div class="course-icon green">MA</div>
+
+                <div>
+                  <strong>Calculus II</strong><br>
+                  MATH204
+                </div>
+              </div>
+            </td>
+
+            <td class="teacher">Prof. Sarah Johnson</td>
+
+            <td><button class="see">Enter<button></td>
+            
+          </tr>
+
+          <tr>
+            <td>
+              <div class="course">
+                <div class="course-icon purple">PH</div>
+
+                <div>
+                  <strong>Physics</strong><br>
+                  PHY110
+                </div>
+              </div>
+            </td>
+
+            <td class="teacher">Dr. Emily Smith</td>
+
+            <td><button class="see">Enter<button></td>
+            
+          </tr>
+
+          <tr>
+            <td>
+              <div class="course">
+                <div class="course-icon orange">EN</div>
+
+                <div>
+                  <strong>English Literature</strong><br>
+                  ENG210
+                </div>
+              </div>
+            </td>
+
+            <td class="teacher">Mr. David Wilson</td>
+
+            <td><button class="see">Enter<button></td>
+            
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
+
+
